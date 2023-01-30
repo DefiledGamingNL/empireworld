@@ -4,12 +4,11 @@
 
 .main-primary {
     background-image: url(../../public/assets/images/main-bg.svg);
-    background-position: top center;
     background-size: cover;
     background-repeat: no-repeat;
     max-width: 1200px;
     margin: 0 auto;
-    height: 100vh;
+    height: 88vh;
     border-radius: 7px;
     border: 2px solid #000;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
@@ -20,4 +19,19 @@
 
 body {
     background-color: #161616;
+}
+
+#contentBox {
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+}
+
+
+#contentBox h2 {
+    text-transform: uppercase;
+    font-family: cursive;
+    font-weight: 700;
 }
