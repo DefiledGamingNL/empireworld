@@ -49,23 +49,29 @@ const StyledModalHeader = styled.div`
 `;
 
 const StyledModal = styled.div`
-  background: white;
-  width: 500px;
-  height: 600px;
-  border-radius: 15px;
-  padding: 15px;
+  position: fixed;
+    top: 20vh;
+    left: 25%;
+    width: 50%;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    z-index: 30;
+    animation: slide-down 300ms ease-out forwards;
+        border: 3px solid rgba(255,255,255,.15);
+    border-radius: 6px;
+    background-clip: padding-box;
+    background: rgba(3,5,11,.97);
 `;
 const StyledModalOverlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.8);
-  transition: all 200ms ease-in-out;
+  position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.75);
 `;
 
 export default Modal;

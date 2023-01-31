@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 
-import { Container, Row, Col, Nav, Navbar} from 'react-bootstrap';
-import Link from "next/link";
+import { Container, Nav, Navbar} from 'react-bootstrap';
 import Modal from "@/components/ui/Modal/Modal";
+import RegisterForm from "@/components/RegisterForm";
 
 
 const NavBar = () => {
@@ -31,7 +31,7 @@ const NavBar = () => {
                             onClose={() => setShowRegisterModal(false)}
                             show={showRegisterModal}
                         >
-                            Hello from the register Modal!
+                            <RegisterForm />
                         </Modal>
                     </Nav>
                 </Navbar.Collapse>

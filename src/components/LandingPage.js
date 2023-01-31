@@ -1,5 +1,8 @@
-import React, {useState} from "react";
+import React from "react";
 import {Button, Col, Container, Row} from "react-bootstrap";
+import classes from './LandingPage.module.css';
+
+
 
 const LandingPage = () => {
 
@@ -9,10 +12,10 @@ const LandingPage = () => {
             <Container>
                 <Row className='justify-content-center text-center'>
                     <Col md={12}>
-                        <div id="contentBox" className='text-center'>
+                        <div id={classes.contentBox} className='text-center'>
                             <h2>Empire World.</h2>
                             <div className="buttonBox">
-                                <Button variant='outline-danger'>Got what it takes?</Button>
+                                <Button variant='danger'>Got what it takes?</Button>
                             </div>
                         </div>
                     </Col>

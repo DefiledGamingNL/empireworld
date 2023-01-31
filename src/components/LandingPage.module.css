@@ -1,0 +1,13 @@
+#contentBox {
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+}
+
+#contentBox h2 {
+    text-transform: uppercase;
+    font-family: cursive;
+    font-weight: 700;
+}
