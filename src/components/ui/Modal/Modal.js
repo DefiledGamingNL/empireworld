@@ -56,11 +56,10 @@ const StyledModal = styled.div`
     background-color: white;
     padding: 1rem;
     border-radius: 14px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    box-shadow: rgb(38, 57, 77) 0 20px 30px -10px;
     z-index: 30;
-    animation: slide-down 300ms ease-out forwards;
-        border: 3px solid rgba(255,255,255,.15);
-    border-radius: 6px;
+    animation: slide-down 500ms ease-out forwards;
+    border: 2px solid #000;
     background-clip: padding-box;
     background: rgba(3,5,11,.97);
 `;
@@ -75,3 +74,4 @@ const StyledModalOverlay = styled.div`
 `;
 
 export default Modal;
+

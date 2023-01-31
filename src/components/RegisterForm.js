@@ -1,5 +1,5 @@
-import {Button, Form} from "react-bootstrap";
-
+import {Button, Col, Container, Form, Row} from "react-bootstrap";
+import classes from './RegisterForm.module.css';
 export default function RegisterForm() {
     // Handles the submit event on form submit.
     const handleSubmit = async (event) => {
@@ -8,8 +8,8 @@ export default function RegisterForm() {
 
         // Get data from the form.
         const data = {
-            first: event.target.first.value,
-            last: event.target.last.value,
+            email: event.target.email.value,
+            password: event.target.password.value,
         }
 
         // Send the data to the server in JSON format.
@@ -40,21 +40,28 @@ export default function RegisterForm() {
     }
     return (
         // We pass the event to the handleSubmit() function on submit.
-        <Form onSubmit={handleSubmit}>
-            <Form.Group className='mb-3'  controlId='formBasicEmail'>
-                <Form.Label>Email Address</Form.Label>
-                <Form.Control type='email' placeholder='Enter email' />
-                <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
-                </Form.Text>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-                Submit
-            </Button>
-        </Form>
+        <Container>
+            <Row>
+                <Col md={12} className='d-flex justify-content-center'>
+                    <Form onSubmit={handleSubmit} className='d-inline-flex flex-column'>
+                        <Form.Group className='mb-3'  controlId='formBasicEmail'>
+                            <Form.Label className={classes.formLabel}>Email Address</Form.Label>
+                            <Form.Control type='email' name='email' placeholder='Enter email' />
+                            <Form.Text className="text-muted">
+                                We'll never share your email with anyone else.
+                            </Form.Text>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Label className={classes.formLabel}>Password</Form.Label>
+                            <Form.Control type="password" name='password' placeholder="Password" />
+                        </Form.Group>
+                        <Button variant="primary" type="submit">
+                            Submit
+                        </Button>
+                    </Form>
+                </Col>
+            </Row>
+
+        </Container>
     )
 }

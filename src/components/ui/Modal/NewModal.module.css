@@ -16,9 +16,9 @@
     background-color: white;
     padding: 1rem;
     border-radius: 14px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    box-shadow: rgb(38, 57, 77) 0 20px 30px -10px;
     z-index: 30;
-    animation: slide-down 300ms ease-out forwards;
+    animation: slide-down 200ms ease-out forwards;
 }
 
 @media (min-width: 768px) {

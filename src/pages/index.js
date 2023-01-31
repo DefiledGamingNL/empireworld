@@ -1,6 +1,7 @@
 import React from "react";
-import Navbar from "@/components/NavBar";
 import LandingPage from "@/components/LandingPage";
+import Navbar from "@/components/NavBar";
+
 const Home = () => {
     return (
         <>
