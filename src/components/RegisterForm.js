@@ -1,59 +1,104 @@
-import {Button, Col, Container, Form, Row} from "react-bootstrap";
+import React, { useState } from 'react';
+import axios from 'axios';
+import bcrypt from 'bcryptjs';
+import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
 import classes from './RegisterForm.module.css';
-export default function RegisterForm() {
-    // Handles the submit event on form submit.
-    const handleSubmit = async (event) => {
-        // Stop the form from submitting and refreshing the page.
-        event.preventDefault()
 
-        // Get data from the form.
-        const data = {
-            email: event.target.email.value,
-            password: event.target.password.value,
+const Register = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        password2: ''
+    });
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+
+    const { name, email, password, password2 } = formData;
+
+    const onChange = e =>
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    const onSubmit = async e => {
+        e.preventDefault();
+        setError('');
+        setSuccess('');
+        if (password !== password2) {
+            setError('Passwords do not match');
+            return;
         }
-
-        // Send the data to the server in JSON format.
-        const JSONdata = JSON.stringify(data)
-
-        // API endpoint where we send form data.
-        const endpoint = '/api/form'
-
-        // Form the request for sending data to the server.
-        const options = {
-            // The method is POST because we are sending data.
-            method: 'POST',
-            // Tell the server we're sending JSON.
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            // Body of the request is the JSON data we created above.
-            body: JSONdata,
+        const salt = await bcrypt.genSalt(10);
+        const encryptedPassword = await bcrypt.hash(password, salt);
+        const newUser = {
+            name: name.trim(),
+            email: email.trim(),
+            password: encryptedPassword
+        };
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+            const body = JSON.stringify(newUser);
+            const res = await axios.post('/api/users', body, config);
+            setSuccess(res.data.message);
+        } catch (err) {
+            setError(err.response.data.error);
         }
+    };
 
-        // Send the form data to our forms API on Vercel and get a response.
-        const response = await fetch(endpoint, options)
-
-        // Get the response data from server as JSON.
-        // If server returns the name submitted, that means the form works.
-        const result = await response.json()
-        alert(`Is this your full name: ${result.data}`)
-    }
     return (
-        // We pass the event to the handleSubmit() function on submit.
         <Container>
-            <Row>
-                <Col md={12} className='d-flex justify-content-center'>
-                    <Form onSubmit={handleSubmit} className='d-inline-flex flex-column'>
-                        <Form.Group className='mb-3'  controlId='formBasicEmail'>
-                            <Form.Label className={classes.formLabel}>Email Address</Form.Label>
-                            <Form.Control type='email' name='email' placeholder='Enter email' />
-                            <Form.Text className="text-muted">
-                                We'll never share your email with anyone else.
-                            </Form.Text>
+            <Row className="justify-content-center">
+                <Col xs={12} md={8} lg={6}>
+                    {error && <Alert variant="danger">{error}</Alert>}
+                    {success && <Alert variant="success">{success}</Alert>}
+                    <Form onSubmit={e => onSubmit(e)}>
+                        <Form.Group controlId="formName">
+                            <Form.Label className={classes.formLabel}>Name</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Enter name"
+                                name="name"
+                                value={name}
+                                onChange={e => onChange(e)}
+                                required
+                            />
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                        <Form.Group controlId="formEmail">
+                            <Form.Label className={classes.formLabel}>Email address</Form.Label>
+                            <Form.Control
+                                type="email"
+                                placeholder="Enter email"
+                                name="email"
+                                value={email}
+                                onChange={e => onChange(e)}
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formPassword">
                             <Form.Label className={classes.formLabel}>Password</Form.Label>
-                            <Form.Control type="password" name='password' placeholder="Password" />
+                            <Form.Control
+                                type="password"
+                                placeholder="Password"
+                                name="password"
+                                value={password}
+                                onChange={e => onChange(e)}
+                                minLength="6"
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formPassword2">
+                            <Form.Label className={classes.formLabel}>Confirm Password</Form.Label>
+                            <Form.Control
+                                type="password"
+                                placeholder="Confirm Password"
+                                name="password2"
+                                value={password2}
+                                onChange={e => onChange(e)}
+                                minLength="6"
+                                required
+                            />
                         </Form.Group>
                         <Button variant="primary" type="submit">
                             Submit
@@ -61,7 +106,8 @@ export default function RegisterForm() {
                     </Form>
                 </Col>
             </Row>
-
         </Container>
-    )
-}
+    );
+};
+
+export default Register;

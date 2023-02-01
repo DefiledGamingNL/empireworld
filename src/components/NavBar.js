@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import { Container, Nav, Navbar} from 'react-bootstrap';
 import Modal from "@/components/ui/Modal/Modal";
 import RegisterForm from "@/components/RegisterForm";
+import LoginForm from "@/components/LoginForm";
 
 
 const NavBar = () => {
@@ -23,7 +24,7 @@ const NavBar = () => {
                             onClose={() => setShowLoginModal(false)}
                             show={showLoginModal}
                         >
-                            Hello from the Login Modal!
+                            <LoginForm />
                         </Modal>
 
                         <Nav.Link><button className='btn btn-xs btn-danger' onClick={() => setShowRegisterModal(true)}>Register</button></Nav.Link>

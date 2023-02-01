@@ -21,17 +21,31 @@
 }
 
 .buttonStyle {
-    background-color: #da4a66;
-    border: 1px solid #da4a66;
-    margin-top: 5%;
+    background-color: #ca0e0d;
+    border-color: #6c0d0d;
+    margin-top: 15%;
+    font-size: 25px;
+}
+
+.buttonStyle:hover {
+    filter: brightness(115%);
 }
 
 #contentBox h2 {
     text-transform: uppercase;
     font-family: cursive;
     font-weight: 700;
-    font-size: 75px;
+    font-size: 100px;
 
+}
+
+#contentBox h4 {
+    text-transform: uppercase;
+    font-family: cursive;
+    font-weight: 700;
+    font-size: 35px;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: #000;
 }
 
 .shadows {
