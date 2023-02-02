@@ -5,12 +5,15 @@ import { query } from '@/lib/db';
 
 // create a transporter using a popular email service such as Gmail
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
+    secure: true,
     auth: {
-        user: 'noreplyempireworld@gmail.com',
-        pass: 'HalloDikkieDik.123'
-    }
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+    },
 });
+
 
 export default async function sendVerificationEmail(NextApiRequest, NextApiResponse) {
     try {
