@@ -32,7 +32,8 @@ const Register = () => {
         const newUser = {
             name: name.trim(),
             email: email.trim(),
-            password: encryptedPassword
+            password: encryptedPassword,
+            isVerified: 0
         };
         try {
             const config = {
@@ -43,6 +44,16 @@ const Register = () => {
             const body = JSON.stringify(newUser);
             const res = await axios.post('/api/users', body, config);
             setSuccess(res.data.message);
+
+            // Sends verification email
+            const emailVerification = {
+                email: email.trim()
+            };
+            const emailBody = JSON.stringify(emailVerification);
+            const emailRes = await axios.post('/api/verify-email', emailBody, config);
+            if (emailRes.status === 200) {
+                setSuccess(`Verification email sent to ${email}. Please check your email.`);
+            }
         } catch (err) {
             setError(err.response.data.error);
         }
