@@ -7,7 +7,7 @@ import { query } from '@/lib/db';
 const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: process.env.SMTP_PORT,
-    secure: true,
+    secure: false,
     auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
@@ -15,10 +15,10 @@ const transporter = nodemailer.createTransport({
 });
 
 
-export default async function sendVerificationEmail(NextApiRequest, NextApiResponse) {
+export default async function sendVerificationEmail(req, res) {
     try {
         // extract user's email from the request body
-        const { email } = NextApiRequest.body;
+        const { email } = req.body;
 
         // generate a unique token for email verification
         const token = uuidv4();
@@ -32,7 +32,7 @@ export default async function sendVerificationEmail(NextApiRequest, NextApiRespo
 
         // send the verification email
         const mailOptions = {
-            from: 'noreplyempireworld@gmail.com',
+            from: 'noreply@defiledgamingnl.com',
             to: email,
             subject: 'Verify your email',
             html: `
@@ -47,9 +47,9 @@ export default async function sendVerificationEmail(NextApiRequest, NextApiRespo
             console.log(`Email sent: ${info.response}`);
         });
 
-        NextApiResponse.status(200).json({ message: 'Verification email sent' });
+        res.status(200).json({ message: 'Verification email sent' });
     } catch (error) {
         console.error(error);
-        NextApiResponse.status(500).json({ message: 'Failed to send verification email' });
+        res.status(500).json({ message: 'Failed to send verification email' });
     }
 }

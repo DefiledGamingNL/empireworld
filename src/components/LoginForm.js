@@ -1,34 +1,35 @@
-import React, { useState } from "react";
-import { useRouter } from "next/router";
-import axios from "axios";
+import React, { useState } from 'react';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import {useRouter} from 'next/router';
+import axios from 'axios';
 
-const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
-    const router = useRouter();
+const LoginForm = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const router = useRouter()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
+
         try {
-            const response = await axios.post("/api/auth/login", {
-                email,
-                password,
-            });
-            const { data } = response;
-            localStorage.setItem("token", data.token);
-            setLoading(false);
-            await router.push("/dashboard");
+            const res = await axios.post('/api/auth', { email, password });
+            const token = res.data.token;
+
+            // Store the token in local storage
+            localStorage.setItem('token', token);
+            console.log(localStorage.getItem('token'));
+            await router.push('/');
+
         } catch (error) {
-            setLoading(false);
             setError(error.response.data.message);
         }
     };
 
     return (
         <form onSubmit={handleSubmit}>
+            {error && <p>{error}</p>}
             <input
                 type="email"
                 placeholder="Email"
@@ -43,12 +44,9 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 required
             />
-            {error && <p>{error}</p>}
-            <button type="submit" disabled={loading}>
-                {loading ? "Loading..." : "Login"}
-            </button>
+            <button type="submit">Login</button>
         </form>
     );
 };
 
-export default Login;
+export default LoginForm;
