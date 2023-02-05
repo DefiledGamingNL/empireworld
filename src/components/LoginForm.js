@@ -20,7 +20,7 @@ const Login = () => {
             });
 
             dispatch({ type: 'LOGIN', payload: response.data.data });
-            setSuccess('Succesvol ingelogd');
+            setSuccess(response.data.message);
         } catch (err) {
             console.log(err);
             setError(err.response.data.message);
