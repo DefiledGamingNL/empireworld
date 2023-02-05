@@ -1,56 +1,42 @@
-import React, {useState} from 'react';
-import {useRouter} from 'next/router';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import {useDispatch, useSelector} from 'react-redux';
-import store from '@/store/store';
+import {Container} from "react-bootstrap";
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
     const dispatch = useDispatch();
-    const router = useRouter();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
         try {
-            const response = await axios.post(`/api/auth`, {
+            const response = await axios.post('/api/auth', {
                 email,
-                password,
+                password
             });
-            dispatch(store(response.data.data));
-            localStorage.setItem('token', response.e.data.token);
-            await router.push('/');
+
+            dispatch({ type: 'LOGIN', payload: response.data.data });
+            setSuccess('Succesvol ingelogd');
         } catch (err) {
+            console.log(err);
             setError(err.response.data.message);
         }
     };
 
     return (
-        <div>
+        <Container>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Email"
-                        required
-                    />
-                </div>
-                <div>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Password"
-                        required
-                    />
-                </div>
+                <input type="email" value={email} onChange={e => setEmail(e.target.value)} />
+                <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
                 <button type="submit">Login</button>
-                {error && <p style={{color: 'red'}}>{error}</p>}
+                {error && <p>{error}</p>}
+                {success && <p>{success}</p>}
             </form>
-        </div>
+        </Container>
     );
 };
 

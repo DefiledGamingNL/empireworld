@@ -37,7 +37,7 @@ export default async function sendVerificationEmail(req, res) {
             subject: 'Verify your email',
             html: `
         <p>Please click the following link to verify your email:</p>
-        <a href="http://localhost:3000/verify-email?token=${token}">Verify email</a>
+        <a href="http://localhost:3000/api/verify?token=${token}">Verify email</a>
       `
         };
         transporter.sendMail(mailOptions, (error, info) => {
