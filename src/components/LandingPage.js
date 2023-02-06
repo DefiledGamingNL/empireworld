@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Button, Col, Container, Row} from "react-bootstrap";
-import classes from './LandingPage.module.css';
+import classes from '../styles/LandingPage.module.scss';
 import Modal from "@/components/ui/Modal/Modal";
 import RegisterForm from "@/components/RegisterForm";
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import bcrypt from 'bcryptjs';
 import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
-import classes from './RegisterForm.module.css';
+import classes from '../styles/RegisterForm.module.scss';
 
 const Register = () => {
     const [formData, setFormData] = useState({
