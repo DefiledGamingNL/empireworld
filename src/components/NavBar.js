@@ -13,7 +13,9 @@ const NavBar = () => {
     const dispatch = useDispatch();
 
     const handleLogOut = () => {
-        dispatch({ type: 'LOGOUT', payload: response.data.data });
+        dispatch({ type: "LOGOUT" });
+        localStorage.removeItem('token');
+
     }
     const { isLoggedIn } = useSelector(state => state);
 
@@ -25,8 +27,9 @@ const NavBar = () => {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className='ms-auto'>
                         {isLoggedIn ? (
-                            <Nav.Link><button className='btn btn-xs btn-success' onClick={() => handleLogOut}>Logout</button></Nav.Link>
-                        ) : <Nav.Link><button className='btn btn-xs btn-success' onClick={() => setShowLoginModal(true)}>Login</button></Nav.Link>
+                            <Nav.Link><button className='btn btn-xs btn-success' onClick={handleLogOut}>Logout</button></Nav.Link>
+                        ) : [<Nav.Link key='login'><button className='btn btn-xs btn-success' onClick={() => setShowLoginModal(true)}>Login</button></Nav.Link>
+                            ,<Nav.Link key='register'><button className='btn btn-xs btn-danger' onClick={() => setShowRegisterModal(true)}>Signup</button></Nav.Link>]
 
                             }
 

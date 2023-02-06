@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import styled from "styled-components";
+import {Modal as BootstrapModal, Button} from "react-bootstrap";
 
 const Modal = ({ show, onClose, children, title }) => {
     const [isBrowser, setIsBrowser] = useState(false);
@@ -15,17 +16,15 @@ const Modal = ({ show, onClose, children, title }) => {
     };
 
     const modalContent = show ? (
-        <StyledModalOverlay>
-            <StyledModal>
-                <StyledModalHeader>
-                    <a href="#" onClick={handleCloseClick}>
-                        x
-                    </a>
-                </StyledModalHeader>
-                {title && <StyledModalTitle>{title}</StyledModalTitle>}
-                <StyledModalBody>{children}</StyledModalBody>
-            </StyledModal>
-        </StyledModalOverlay>
+        <BootstrapModal>
+            <BootstrapModal.Title>
+                {title && {title}}
+                <BootstrapModal.Body>{children}</BootstrapModal.Body>
+                <BootstrapModal.Footer>
+                    <Button className='btn btn-lg btn-danger' onClick={handleCloseClick}>Close</Button>
+                </BootstrapModal.Footer>
+            </BootstrapModal.Title>
+        </BootstrapModal>
     ) : null;
 
     if (isBrowser) {
@@ -39,10 +38,11 @@ const Modal = ({ show, onClose, children, title }) => {
 };
 
 const StyledModalBody = styled.div`
+
   padding-top: 10px;
 `;
 
-const StyledModalHeader = styled.div`
+const StyledModalFooter = styled.div`
   display: flex;
   justify-content: flex-end;
   font-size: 25px;

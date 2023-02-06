@@ -1,4 +1,6 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
 const initialState = {
     isLoggedIn: false,
@@ -11,15 +13,25 @@ const reducer = (state = initialState, action) => {
             return { ...state, isLoggedIn: true, user: action.payload }
         case 'LOGOUT':
             return { ...state, isLoggedIn: false, user: {} }
-        case 'setData':
-            return {...state, data: action.data};
         default:
             return state
     }
 }
 
+const persistConfig = {
+    key: "root",
+    storage
+};
+
+const persistedReducer = persistReducer(persistConfig, reducer);
+
 const store = configureStore({
-    reducer
+    reducer: persistedReducer,
+    middleware: getDefaultMiddleware({
+        serializableCheck: false
+    })
 });
 
-export default store
+export const persistor = persistStore(store);
+
+export default store;
