@@ -4,7 +4,8 @@ import storage from "redux-persist/lib/storage";
 
 const initialState = {
     isLoggedIn: false,
-    user: {}
+    user: {},
+    createdCharacter: {}
 }
 
 const reducer = (state = initialState, action) => {
@@ -13,6 +14,11 @@ const reducer = (state = initialState, action) => {
             return { ...state, isLoggedIn: true, user: action.payload }
         case 'LOGOUT':
             return { ...state, isLoggedIn: false, user: {} }
+        case 'CREATE_CHARACTER':
+            if (!state.isLoggedIn) {
+                return state;
+            }
+            return { ...state, createdCharacter: action.payload }
         default:
             return state
     }
